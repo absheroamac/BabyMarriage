@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body>
+    <html lang="en" className={`${cormorant.variable} ${inter.variable}`} style={{ backgroundColor: '#eee' }}>
+      <body className="mx-auto max-w-[480px] bg-background min-h-screen relative shadow-2xl overflow-x-hidden">
         <Providers>{children}</Providers>
       </body>
     </html>

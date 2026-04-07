@@ -30,7 +30,8 @@ export default function PeopleSection() {
   return (
     <section
       ref={containerRef}
-      className="relative py-28 md:py-48 flex flex-col justify-center min-h-[100vh] w-full overflow-hidden bg-background"
+      className="relative py-28 md:py-48 flex flex-col justify-center min-h-[100vh] w-full overflow-hidden bg-background mt-20"
+      style={{ paddingTop: '100px' }}
     >
 
       {/* Top Left Flower */}
