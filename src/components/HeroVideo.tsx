@@ -21,8 +21,29 @@ export default function HeroVideo() {
     // Make sure viewport is strictly at top initially
     window.scrollTo(0, 0);
 
+    // Force iOS Safari to paint the first video frame
+    if (videoRef.current) {
+      // Preload instructions
+      videoRef.current.load();
+      
+      const setInitialFrame = () => {
+        if (videoRef.current && videoRef.current.currentTime === 0) {
+          videoRef.current.currentTime = 0.001;
+        }
+      };
+      
+      if (videoRef.current.readyState >= 1) {
+        setInitialFrame();
+      } else {
+        videoRef.current.addEventListener("loadedmetadata", setInitialFrame);
+      }
+    }
+
     return () => {
       document.body.style.overflow = "auto";
+      if (videoRef.current) {
+        videoRef.current.removeEventListener("loadedmetadata", () => {});
+      }
     };
   }, []);
 
@@ -35,7 +56,7 @@ export default function HeroVideo() {
     document.body.style.overflow = "auto";
     
     // Play video
-    videoRef.current.play();
+    videoRef.current.play().catch(e => console.log("Video play locked by browser", e));
 
     // Create a sequenced timeline
     const tl = gsap.timeline({
@@ -82,6 +103,7 @@ export default function HeroVideo() {
         muted
         playsInline
         loop
+        preload="auto"
       />
     </div>
   );
