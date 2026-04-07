@@ -9,21 +9,35 @@ export default function InvitationSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (!sectionRef.current) return;
+    
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.fromTo(
-      sectionRef.current,
-      { opacity: 0, y: 30 },
+    const paperBg = sectionRef.current.querySelector(".paper-card");
+    const blocks = gsap.utils.toArray(".invite-block", sectionRef.current);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+      }
+    });
+
+    tl.fromTo(
+      paperBg,
+      { opacity: 0, y: 40, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out" }
+    ).fromTo(
+      blocks,
+      { opacity: 0, y: 20 },
       {
         opacity: 1,
         y: 0,
         duration: 1,
+        stagger: 0.25,
         ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-        },
-      }
+      },
+      "-=0.6" // overlapping start
     );
   }, []);
 
@@ -33,7 +47,7 @@ export default function InvitationSection() {
       className="py-10 px-3 w-full flex justify-center items-center"
     >
       <div
-        className="w-full max-w-[500px] mx-auto flex flex-col items-center justify-between text-center px-10 py-20 sm:px-16 sm:py-24 drop-shadow-xl"
+        className="paper-card w-full max-w-[500px] mx-auto flex flex-col items-center justify-between text-center px-10 py-20 sm:px-16 sm:py-24 drop-shadow-xl"
         style={{
           backgroundImage: "url('/paperBackground.png')",
           backgroundSize: "100% 100%",
@@ -43,7 +57,7 @@ export default function InvitationSection() {
       >
 
         {/* Top Block: Parents & Address */}
-        <div className="flex flex-col gap-6 w-full">
+        <div className="invite-block flex flex-col gap-6 w-full">
           <div className="flex flex-col gap-2 text-foreground">
             <h3 className="serif text-[1.4rem] sm:text-[1.7rem] font-medium tracking-wide leading-tight">
               Mr & Mrs Said Muhammed<br className="hidden sm:block" /> & Ayshabi
@@ -56,7 +70,7 @@ export default function InvitationSection() {
 
         {/* Middle Block: Invitation Text */}
         <div
-          className="sans text-[1.3rem] sm:text-2xl text-foreground font-semibold leading-[1] tracking-wide mb-8 sm:mb-6"
+          className="invite-block sans text-[1.3rem] sm:text-2xl text-foreground font-semibold leading-[1] tracking-wide mb-8 sm:mb-6"
           style={{ marginTop: '60px' }}
         >
           Cordially Invite you to the<br />
@@ -65,7 +79,7 @@ export default function InvitationSection() {
         </div>
 
         {/* Bottom Block: Love Icon */}
-        <div className="pt-2" style={{ marginTop: '25px' }}>
+        <div className="invite-block pt-2" style={{ marginTop: '25px' }}>
           <Image
             src="/LoveIcon.svg"
             alt="Love Icon"

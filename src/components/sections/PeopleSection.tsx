@@ -25,6 +25,30 @@ export default function PeopleSection() {
         },
       }
     );
+
+    // Parallax for Top Left Flower
+    gsap.to(".flower-parallax-1", {
+      y: 80, // subtle downward drift in px
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
+      },
+    });
+
+    // Parallax for Bottom Right Flower
+    gsap.to(".flower-parallax-2", {
+      y: -80, // subtle upward drift in px
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
+      },
+    });
   }, []);
 
   return (
@@ -38,6 +62,7 @@ export default function PeopleSection() {
       <img
         src="/flowers/flower1.png"
         alt="Decorative flower"
+        className="flower-parallax-1 w-[65%] h-auto object-contain pointer-events-none opacity-90 self-start"
         style={{
           top: 0,
           left: 0,
@@ -77,7 +102,7 @@ export default function PeopleSection() {
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-end' }}>
             <p className="sans text-[#2a2a2a]" style={{ fontSize: 'min(1.25rem, 4vw)', fontWeight: 500 }}>
-              Grand daughter of
+              Son of
             </p>
             <p className="sans text-[#2a2a2a]" style={{ fontSize: 'min(1.1rem, 3.5vw)', opacity: 0.85, lineHeight: 1.6, fontWeight: 300 }}>
               ( Late ) Sharafudheen & Asmath<br />
@@ -94,6 +119,7 @@ export default function PeopleSection() {
       <img
         src="/flowers/flower2.png"
         alt="Decorative flower"
+        className="flower-parallax-2"
         style={{
           bottom: 0,
           right: 0,
